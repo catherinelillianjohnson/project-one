@@ -4,8 +4,26 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/=">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <link rel="stylesheet" href="./assets/style.css" />
     <title>Kroger Recipe Planner</title>
   </head>
-  <body></body>
+  <body>
+    <div>
+      <header class="has-background-grey-light">Make a meal</header>
+      <form id="search-form">
+        <input type="text" id="search" placeholder="Search for your meal" />
+        <button id="search-btn">Search</button>
+      </form>
+    </div>
+    <div>
+      <ul id="search-history"></ul>
+    </div>
+
+    <script src="./assets/script.js"></script>
+  </body>
 </html>
