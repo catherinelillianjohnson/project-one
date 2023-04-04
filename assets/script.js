@@ -53,6 +53,7 @@ function search(food) {
 
 }
 
+
 var arrayOfIngredients = ['ingredient1', 'ingredient2', 'ingredient3']
 var randomIngredient = arrayOfIngredients[Math.floor(Math.random() * arrayOfIngredients.length)]
 
