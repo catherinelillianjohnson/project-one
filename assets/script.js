@@ -5,7 +5,7 @@ var mealList = $("meal");
 
 var EdamamUrl ="https://api.edamam.com/api/food-database/v2/parser?"
 var app_id="app_id=7cf60948"
-var app_key="&app_key=7a0e4d80d09649c34f64dba432baa17e&ingr="
+var app_key="&app_key=7a0e4d80d09649c34f64dba432baa17e"
 
 var ingr = "chicken"
 
@@ -28,23 +28,23 @@ function search(food) {
     // create a for loop to create the ingredients list.
     $("#search-history").append(data.results)
 
+    for (let i = 0; i < data.results[0].missedIngredients.length; i++) {
+
+      ingr = data.results[0].missedIngredients[i].name
+    
+      fetch (EdamamUrl + app_id + app_key + "&ingr=" + ingr)
+      .then(function(response){
+        return response.json();
+      })
+      .then(function(data) {
+    
+        console.log(data.parsed[0].food.nutrients.ENERC_KCAL)
+    
+      })
+      
+    }
+
   })
-
-for (let i = 0; i < data.results[0].missedIngredients.length; i++) {
-
-  ingr = data.results[0].missedIngredients[i].name
-
-  fetch (EdamamUrl + app_id + app_key + ingr)
-  .then(function(response){
-    return response.json();
-  })
-  .then(function(data) {
-
-    console.log(data.food.enerc_kcal)
-
-  })
-  
-}
 
 }
 
