@@ -21,8 +21,11 @@ function search(food) {
    var randomRecipe = data.results[Math.floor(Math.random() * data.results.length)]
  
  console.log(randomRecipe.title);
+ console.log(randomRecipe.image)
+
     for (let i = 0; i < randomRecipe.missedIngredients.length; i++) {
       console.log(randomRecipe.missedIngredients[i].name)
+      console.log(randomRecipe.missedIngredients[i].image)
     }
     
 
