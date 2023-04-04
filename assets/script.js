@@ -1,6 +1,6 @@
 var spoontacularAPI = "apiKey=7474228d0aa440408c3a09da9a064abe";
 var rootURL = "https://api.spoonacular.com/recipes/complexSearch?";
-var searchBtn = $("search-btn");
+var searchBtn = $("#search-btn");
 var mealList = $("meal");
 
 var EdamamUrl ="https://api.edamam.com/api/food-database/v2/parser?"
@@ -18,18 +18,19 @@ function search(food) {
   .then(function(data) {
  
     
-   var randomRecipe = data.results[Math.floor(Math.random() * data.results.length)]
+   var randomRecipe = data.results[Math.floor(Math.random() * data.results.length)];
  
- console.log(randomRecipe.title);
- console.log(randomRecipe.image)
+  console.log(randomRecipe.title);
+  console.log(randomRecipe.image)
+   
 
     for (let i = 0; i < randomRecipe.missedIngredients.length; i++) {
-      console.log(randomRecipe.missedIngredients[i].name)
-      console.log(randomRecipe.missedIngredients[i].image)
-    }
+      console.log(randomRecipe.missedIngredients[i].name);
+      console.log(randomRecipe.missedIngredients[i].image);
+    };
     
 
-    $("#search-history").append(data.results)
+    $("#search-history").append(data.results);
 
     // Edamam API fetches ingredients calorie count
 
@@ -49,21 +50,21 @@ function search(food) {
       
     }
 
-  })
+  });
 
-}
+};
 
 
-var arrayOfIngredients = ['ingredient1', 'ingredient2', 'ingredient3']
-var randomIngredient = arrayOfIngredients[Math.floor(Math.random() * arrayOfIngredients.length)]
+var arrayOfIngredients = ['ingredient1', 'ingredient2', 'ingredient3'];
+var randomIngredient = arrayOfIngredients[Math.floor(Math.random() * arrayOfIngredients.length)];
 
-$("#search-btn").on("click", function(event) {
+searchBtn.on("click", function(event) {
   event.preventDefault();
   // .trim takes out the white spaces like if you add a space when searching
   var food = $("#search").val().trim();
-  search(food)
-  $("#search").val("")
-})
+  search(food);
+  $("#search").val("");
+});
 
 
 var modal = document.getElementById("myModal");
