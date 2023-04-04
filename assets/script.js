@@ -1,8 +1,13 @@
-var spoontacularAPI = "apiKey=8f6102895a99438d990df314e0de78d0";
+var spoontacularAPI = "apiKey=7474228d0aa440408c3a09da9a064abe";
 var rootURL = "https://api.spoonacular.com/recipes/complexSearch?";
 var searchBtn = $("search-btn");
 var mealList = $("meal");
 
+var EdamamUrl ="https://api.edamam.com/api/food-database/v2/parser?"
+var app_id="app_id=7cf60948"
+var app_key="&app_key=7a0e4d80d09649c34f64dba432baa17e"
+
+var ingr = "chicken"
 
 
 function search(food) {
@@ -22,7 +27,27 @@ function search(food) {
     
 
     $("#search-history").append(data.results)
+
+    // Edamam API fetches ingredients calorie count
+
+    for (let i = 0; i < data.results[0].missedIngredients.length; i++) {
+
+      ingr = randomRecipe.missedIngredients[i].name
+    
+      fetch (EdamamUrl + app_id + app_key + "&ingr=" + ingr)
+      .then(function(response){
+        return response.json();
+      })
+      .then(function(data) {
+    
+        console.log(data.parsed[0].food.nutrients.ENERC_KCAL)
+    
+      })
+      
+    }
+
   })
+
 }
 
 var arrayOfIngredients = ['ingredient1', 'ingredient2', 'ingredient3']
@@ -50,9 +75,9 @@ var span = document.getElementsByClassName("close")[0];
 //     modal.style.display = "None";
 // }
 
-// window.onclick = function(event) {
-//     if (event.target == modal) {
-//         modal.style.display = "none";
-//     }
-// }
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
 
