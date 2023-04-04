@@ -1,25 +1,11 @@
-// Kroger API
+var spoontacularAPI = "apiKey=8f6102895a99438d990df314e0de78d0";
+var rootURL = "https://api.spoonacular.com/recipes/complexSearch?";
+
+var searchBtn = $("search-btn");
+var mealList = $("meal");
 
 
-var settings = {
-    "async": true,
-    "crossDomain": true,
-    "url": "https://api.kroger.com/v1/products?filter.brand={{BRAND}}&filter.term={{TERM}}&filter.locationId={{LOCATION_ID}}",
-    "method": "GET",
-    "headers": {
-      "Accept": "application/json",
-      "Authorization": ""
-    }
-  }
-  
-  $.ajax(settings).done(function (response) {
-    console.log(response);
-  });
-  
 
-<<<<<<< HEAD
-  
-=======
 function search(food) {
   fetch(rootURL + spoontacularAPI + "&query=" + food)
   .then(function(response){
@@ -58,5 +44,3 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
-
->>>>>>> de4115ae3d2187681608876f4e657deb7bf2dfbf
