@@ -11,21 +11,22 @@ function search(food) {
     return response.json();
   }) 
   .then(function(data) {
-    $("")
-    console.log(data.results[0].title);
-    console.log(data.results[0].missedIngredients[0].name)
-    console.log(data.results[0].missedIngredients[1].name)
-    console.log(data.results[0].missedIngredients[2].name)
-    console.log(data.results[0].missedIngredients[3].name)
-    console.log(data.results[0].missedIngredients[4].name)
-    console.log(data.results[0].missedIngredients[5].name)
-    console.log(data.results[0].missedIngredients[6].name)
-    // create a for loop to create the ingredients list.
+ 
+    
+   var randomRecipe = data.results[Math.floor(Math.random() * data.results.length)]
+ 
+ console.log(randomRecipe.title);
+    for (let i = 0; i < randomRecipe.missedIngredients.length; i++) {
+      console.log(randomRecipe.missedIngredients[i].name)
+    }
+    
+
     $("#search-history").append(data.results)
   })
 }
 
-
+var arrayOfIngredients = ['ingredient1', 'ingredient2', 'ingredient3']
+var randomIngredient = arrayOfIngredients[Math.floor(Math.random() * arrayOfIngredients.length)]
 
 $("#search-btn").on("click", function(event) {
   event.preventDefault();
