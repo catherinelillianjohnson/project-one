@@ -1,4 +1,4 @@
-var spoontacularAPI = "apiKey=8f6102895a99438d990df314e0de78d0";
+var spoontacularAPI = "apiKey=7474228d0aa440408c3a09da9a064abe";
 var rootURL = "https://api.spoonacular.com/recipes/complexSearch?";
 var searchBtn = $("search-btn");
 var mealList = $("meal");
@@ -28,9 +28,11 @@ function search(food) {
 
     $("#search-history").append(data.results)
 
+    // Edamam API fetches ingredients calorie count
+
     for (let i = 0; i < data.results[0].missedIngredients.length; i++) {
 
-      ingr = data.results[0].missedIngredients[i].name
+      ingr = randomRecipe.missedIngredients[i].name
     
       fetch (EdamamUrl + app_id + app_key + "&ingr=" + ingr)
       .then(function(response){
