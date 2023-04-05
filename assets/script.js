@@ -3,6 +3,8 @@ var rootURL = "https://api.spoonacular.com/recipes/complexSearch?";
 var searchBtn = $("#search-btn");
 var mealList = $("meal");
 
+//Tyler API key = 6d62c079711f4445911e77ede85400b1
+
 var EdamamUrl ="https://api.edamam.com/api/food-database/v2/parser?"
 var app_id="app_id=7cf60948"
 var app_key="&app_key=7a0e4d80d09649c34f64dba432baa17e"
@@ -20,13 +22,13 @@ function search(food) {
     
    var randomRecipe = data.results[Math.floor(Math.random() * data.results.length)];
  
-  console.log(randomRecipe.title);
-  console.log(randomRecipe.image)
+  // console.log(randomRecipe.title);
+  // console.log(randomRecipe.image)
    
 
     for (let i = 0; i < randomRecipe.missedIngredients.length; i++) {
-      console.log(randomRecipe.missedIngredients[i].name);
-      console.log(randomRecipe.missedIngredients[i].image);
+      // console.log(randomRecipe.missedIngredients[i].name);
+      // console.log(randomRecipe.missedIngredients[i].image);
     };
     
 
@@ -43,24 +45,33 @@ function search(food) {
       fetch (EdamamUrl + app_id + app_key + "&ingr=" + ingr)
       .then(function(response){
         return response.json();
+        
       })
       .then(function(data) {
     
-        var calories = data.parsed[0].food.nutrients.ENERC_KCAL
 
-        var ingredientEl = document.createElement("li") 
-        var caloriesEl = document.createElement("p")
-        var ingredientNameElement = document.createElement("p")
-        console.log(randomRecipe.missedIngredients[i])
-        ingredientNameElement.textContent = randomRecipe.missedIngredients[i].name
-        caloriesEl.textContent = calories
-        ingredientEl.appendChild(ingredientNameElement)
-        ingredientEl.appendChild(caloriesEl)
-        document.getElementById("ingredient-list").appendChild(ingredientEl)
+        if (data.parsed[0].food.nutrients.ENERC_KCAL) {
+          
+          var calories = data.parsed[0].food.nutrients.ENERC_KCAL
+          
 
-     
-        
-    
+        } else {
+          
+          var calories = "unknown"
+          
+
+        }
+
+          var ingredientEl = document.createElement("li") 
+          var caloriesEl = document.createElement("p")
+          var ingredientNameElement = document.createElement("p")
+          //console.log(randomRecipe.missedIngredients[i])
+          ingredientNameElement.textContent = randomRecipe.missedIngredients[i].name
+          caloriesEl.textContent = calories + " calories"
+          ingredientEl.appendChild(ingredientNameElement)
+          ingredientEl.appendChild(caloriesEl)
+          document.getElementById("ingredient-list").appendChild(ingredientEl)
+
       })
       
     }
