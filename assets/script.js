@@ -27,6 +27,8 @@ function search(food) {
     for (let i = 0; i < randomRecipe.missedIngredients.length; i++) {
       console.log(randomRecipe.missedIngredients[i].name);
       console.log(randomRecipe.missedIngredients[i].image);
+
+      
     };
     
 
