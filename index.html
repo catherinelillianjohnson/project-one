@@ -10,41 +10,49 @@
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
     />
     <link rel="stylesheet" href="./assets/style.css" />
-    <title>Kroger Recipe Planner</title>
+    <title>The Random Recipe Generator</title>
   </head>
   <body></body>
-
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
   <script src="./assets/script.js"></script>
 
-
   <body>
     <div>
-      <header class="has-background-grey-light">Make a meal</header>
-      <form id="search-form">
-        <input type="text" id="search" placeholder="Search for your meal" />
-        <button id="search-btn">Search</button> 
-        <div id="myModal" class="modal">
-
-        <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2 id ="myBtn">recipe</h2>
-    <ul id="ingredient-list"></ul>
-  
-  </div>
-</div>
+      <header class="has-background-grey-light has-text-centered is-size-1">The Random Recipe Generator</header>
+      <form class="has-text-centered" id="search-form">
+        <input  type="text" id="search" placeholder="Search for your meal" />
+        <button id="search-btn">Search</button>
       </form>
-      
+      <!-- <div id="myModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2 id="myBtn">recipe</h2>
+        </div> -->
+      <!-- </div> -->
+      <!-- bulma card -->
+      <div class="card">
+        <div class="card-image"></div>
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <!-- This is where the image is appended -->
+              <figure class="image is-250x250">
+                <div id="recipeImg"></div>
+              </figure>
+            </div>
+            <div class="is-size-1" id="recipeTitle"></div>
+          </div>
+          <div class="ingredients-section">
+            <ul id="ingredient-list"></ul>
+          </div>
+        </div>
+      </div>
     </div>
     <div>
       <ul id="search-history"></ul>
     </div>
 
     <script src="./assets/script.js"></script>
-  
-
-
-
   </body>
 </html>
