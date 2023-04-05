@@ -45,6 +45,12 @@ function search(food) {
       .then(function(data) {
     
         console.log(data.parsed[0].food.nutrients.ENERC_KCAL)
+
+        for (let i = 0; i < randomRecipe.missedIngredients.length; i++) {
+          var ingredientEl = document.createElement("li") 
+          ingredientEl.textContent = randomRecipe.missedIngredients[i]
+               document.getElementById("ingredient-list").appendChild(ingredientEl)
+         }
     
       })
       
@@ -71,14 +77,13 @@ var modal = document.getElementById("myModal");
 var btn = document.getElementById("search-btn");
 var span = document.getElementsByClassName("close")[0];
 
-// btn.onclick = function() {
-//     modal.style.display = "block";
-  
-// }
-
-// span.onclick = function() {
-//     modal.style.display = "None";
-// }
+ btn.onclick = function() {
+     modal.style.display = "block";
+ 
+ }
+ span.onclick = function() {
+     modal.style.display = "None";
+ }
 
 window.onclick = function(event) {
     if (event.target == modal) {
