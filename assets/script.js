@@ -1,4 +1,5 @@
-var spoontacularAPI = "apiKey=7474228d0aa440408c3a09da9a064abe";
+var spoontacularAPI = "apiKey=6d62c079711f4445911e77ede85400b1";
+// spare API Key:  7474228d0aa440408c3a09da9a064abe
 var rootURL = "https://api.spoonacular.com/recipes/complexSearch?";
 var searchBtn = $("#search-btn");
 var mealList = $("meal");
@@ -13,6 +14,11 @@ var ingr = "chicken"
 
 
 function search(food) {
+  // empties the previous results before the next search results appear
+  $("#recipeImg").empty()
+  $("#ingredient-list").empty()
+  $("#recipeTitle").empty()
+
   fetch(rootURL + spoontacularAPI + "&query=" + food + "&fillIngredients=true")
   .then(function(response){
     return response.json();
@@ -48,34 +54,33 @@ function search(food) {
         
       })
       .then(function(data) {
-    
-
-        if (data.parsed[0].food.nutrients.ENERC_KCAL) {
-          
-          var calories = data.parsed[0].food.nutrients.ENERC_KCAL
-          
-
-        } else {
-          
-          var calories = "unknown"
-          
-
-        }
-
-          var ingredientEl = document.createElement("li") 
-          var caloriesEl = document.createElement("p")
-          var ingredientNameElement = document.createElement("p")
-          //console.log(randomRecipe.missedIngredients[i])
-          ingredientNameElement.textContent = randomRecipe.missedIngredients[i].name
-          caloriesEl.textContent = calories + " calories"
-          ingredientEl.appendChild(ingredientNameElement)
-          ingredientEl.appendChild(caloriesEl)
-          document.getElementById("ingredient-list").appendChild(ingredientEl)
+    // append in ingredient picture, ingredient name, calorie count
+        var calories = data.parsed[0].food.nutrients.ENERC_KCAL
+        var ingredientEl = document.createElement("li") 
+        var caloriesEl = document.createElement("p")
+        var ingredientPictureElement = document.createElement("img")
+        var ingredientNameElement = document.createElement("p")
+        ingredientNameElement.textContent = randomRecipe.missedIngredients[i].name
+        caloriesEl.textContent = calories
+        ingredientPictureElement.src = randomRecipe.missedIngredients[i].image
+        ingredientEl.appendChild(ingredientPictureElement)
+        ingredientEl.appendChild(ingredientNameElement)
+        ingredientEl.appendChild(caloriesEl)
+        document.getElementById("ingredient-list").appendChild(ingredientEl)
 
       })
       
     }
+    // append in recipe title
+    var recipeTitleEl = document.getElementById("recipeTitle")
+    var recipeTitle = document.createTextNode(randomRecipe.title)
+    recipeTitleEl.appendChild(recipeTitle)
 
+    // append in image of recipe
+    var recipePictureElement = document.createElement("img")
+    recipePictureElement.src = randomRecipe.image
+    var src = document.getElementById("recipeImg")
+    src.appendChild(recipePictureElement)
   });
 
 };
@@ -93,20 +98,20 @@ searchBtn.on("click", function(event) {
 });
 
 
-var modal = document.getElementById("myModal");
+var card = document.getElementById("ingredientCard");
 var btn = document.getElementById("search-btn");
 var span = document.getElementsByClassName("close")[0];
 
- btn.onclick = function() {
-     modal.style.display = "block";
+//  btn.onclick = function() {
+//      modal.style.display = "block";
  
- }
- span.onclick = function() {
-     modal.style.display = "None";
- }
+//  }
+//  span.onclick = function() {
+//      modal.style.display = "None";
+//  }
 
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
+// window.onclick = function(event) {
+//     if (event.target == modal) {
+//         modal.style.display = "none";
+//     }
+// }
