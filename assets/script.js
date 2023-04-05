@@ -36,7 +36,9 @@ function search(food) {
 
     // Edamam API fetches ingredients calorie count
 
-    for (let i = 0; i < data.results[0].missedIngredients.length; i++) {
+    for (let i = 0; i < randomRecipe.missedIngredients.length; i++) {
+
+
 
       ingr = randomRecipe.missedIngredients[i].name
     
@@ -46,7 +48,20 @@ function search(food) {
       })
       .then(function(data) {
     
-        console.log(data.parsed[0].food.nutrients.ENERC_KCAL)
+        var calories = data.parsed[0].food.nutrients.ENERC_KCAL
+
+        var ingredientEl = document.createElement("li") 
+        var caloriesEl = document.createElement("p")
+        var ingredientNameElement = document.createElement("p")
+        console.log(randomRecipe.missedIngredients[i])
+        ingredientNameElement.textContent = randomRecipe.missedIngredients[i].name
+        caloriesEl.textContent = calories
+        ingredientEl.appendChild(ingredientNameElement)
+        ingredientEl.appendChild(caloriesEl)
+        document.getElementById("ingredient-list").appendChild(ingredientEl)
+
+     
+        
     
       })
       
@@ -73,14 +88,13 @@ var modal = document.getElementById("myModal");
 var btn = document.getElementById("search-btn");
 var span = document.getElementsByClassName("close")[0];
 
-// btn.onclick = function() {
-//     modal.style.display = "block";
-  
-// }
-
-// span.onclick = function() {
-//     modal.style.display = "None";
-// }
+ btn.onclick = function() {
+     modal.style.display = "block";
+ 
+ }
+ span.onclick = function() {
+     modal.style.display = "None";
+ }
 
 window.onclick = function(event) {
     if (event.target == modal) {
