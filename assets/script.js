@@ -1,5 +1,5 @@
-var spoontacularAPI = "apiKey=6d62c079711f4445911e77ede85400b1";
-// spare API Key:  7474228d0aa440408c3a09da9a064abe
+var spoontacularAPI = "apiKey=7474228d0aa440408c3a09da9a064abe";
+// spare API Key: 6d62c079711f4445911e77ede85400b1
 var rootURL = "https://api.spoonacular.com/recipes/complexSearch?";
 var searchBtn = $("#search-btn");
 var mealList = $("meal");
@@ -26,6 +26,23 @@ function search(food) {
   .then(function(data) {
  
     console.log(data.results)
+
+    if(data.results.length === 0) {
+
+      var modal =document.getElementById("myModal");
+    
+      var span = document.getElementsByClassName("close")[0];
+        modal.style.display = "block";
+      span.onclick = function() {
+      modal.style.display = "none";
+    }
+      window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "block";
+        }
+    }
+    }
+
     
    var randomRecipe = data.results[Math.floor(Math.random() * data.results.length)];
     
@@ -35,8 +52,7 @@ function search(food) {
     // Edamam API fetches ingredients calorie count
 
     for (let i = 0; i < randomRecipe.missedIngredients.length; i++) {
-
-
+      
 
       ingr = randomRecipe.missedIngredients[i].name
     
@@ -45,7 +61,11 @@ function search(food) {
         return response.json();
         
       })
+
       .then(function(data) {
+
+
+       
     // append in ingredient picture, ingredient name, calorie count
         var calories = data.hints[0].food.nutrients.ENERC_KCAL
         var ingredientEl = document.createElement("li") 
@@ -62,7 +82,6 @@ function search(food) {
         
         console.log(data.hints.measures)
 
-        
 
       })
       
@@ -91,23 +110,16 @@ searchBtn.on("click", function(event) {
   var food = $("#search").val().trim();
   search(food);
   $("#search").val("");
+ 
+
 });
 
 
 var card = document.getElementById("ingredientCard");
-var btn = document.getElementById("search-btn");
-var span = document.getElementsByClassName("close")[0];
 
-//  btn.onclick = function() {
-//      modal.style.display = "block";
+
+
+
+
+
  
-//  }
-//  span.onclick = function() {
-//      modal.style.display = "None";
-//  }
-
-// window.onclick = function(event) {
-//     if (event.target == modal) {
-//         modal.style.display = "none";
-//     }
-// }
