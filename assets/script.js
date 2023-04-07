@@ -58,7 +58,7 @@ function search(food) {
         var ingredientPictureElement = document.createElement("img")
         var ingredientNameElement = document.createElement("p")
         ingredientNameElement.textContent = randomRecipe.missedIngredients[i].name
-        caloriesEl.textContent = calories
+        caloriesEl.textContent = calories + " calories"
         ingredientPictureElement.src = randomRecipe.missedIngredients[i].image
         ingredientEl.appendChild(ingredientPictureElement)
         ingredientEl.appendChild(ingredientNameElement)
