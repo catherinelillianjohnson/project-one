@@ -4,7 +4,7 @@ var rootURL = "https://api.spoonacular.com/recipes/complexSearch?";
 var searchBtn = $("#search-btn");
 var mealList = $("meal");
 
-//Tyler API key = 6d62c079711f4445911e77ede85400b1
+
 
 var EdamamUrl ="https://api.edamam.com/api/food-database/v2/parser?"
 var app_id="app_id=7cf60948"
@@ -25,17 +25,9 @@ function search(food) {
   }) 
   .then(function(data) {
  
+    console.log(data.results)
     
    var randomRecipe = data.results[Math.floor(Math.random() * data.results.length)];
- 
-  // console.log(randomRecipe.title);
-  // console.log(randomRecipe.image)
-   
-
-    for (let i = 0; i < randomRecipe.missedIngredients.length; i++) {
-      // console.log(randomRecipe.missedIngredients[i].name);
-      // console.log(randomRecipe.missedIngredients[i].image);
-    };
     
 
     $("#search-history").append(data.results);
@@ -55,18 +47,22 @@ function search(food) {
       })
       .then(function(data) {
     // append in ingredient picture, ingredient name, calorie count
-        var calories = data.parsed[0].food.nutrients.ENERC_KCAL
+        var calories = data.hints[0].food.nutrients.ENERC_KCAL
         var ingredientEl = document.createElement("li") 
         var caloriesEl = document.createElement("p")
         var ingredientPictureElement = document.createElement("img")
         var ingredientNameElement = document.createElement("p")
-        ingredientNameElement.textContent = randomRecipe.missedIngredients[i].name
-        caloriesEl.textContent = calories
+        ingredientNameElement.textContent = randomRecipe.missedIngredients[i].original
+        caloriesEl.textContent = calories + " calories"
         ingredientPictureElement.src = randomRecipe.missedIngredients[i].image
         ingredientEl.appendChild(ingredientPictureElement)
         ingredientEl.appendChild(ingredientNameElement)
         ingredientEl.appendChild(caloriesEl)
         document.getElementById("ingredient-list").appendChild(ingredientEl)
+        
+        console.log(data.hints.measures)
+
+        
 
       })
       
