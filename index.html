@@ -19,10 +19,11 @@
 
   <body>
     <div>
-      <img src="assets/recipe-lottery-logo.png">
-      <header class="has-background-grey-light has-text-centered is-size-1">The Recipe Lottery</header>
+      <div class="header-logo">
+        <img src="assets/recipe-lottery-logo.png">
+      </div>
       <form class="has-text-centered" id="search-form">
-        <input  type="text" id="search" placeholder="Search for your meal" />
+        <input  type="text" id="search" placeholder="Search for a recipe (ex. pasta)" />
         <button id="search-btn">Search</button>
       </form>
     
@@ -38,13 +39,13 @@
         <div class="card-image"></div>
         <div class="card-content">
           <div class="media">
+            <div class="is-size-1" id="recipeTitle"></div>
             <div class="media-left">
               <!-- This is where the image is appended -->
               <figure class="image is-250x250">
                 <div id="recipeImg"></div>
               </figure>
             </div>
-            <div class="is-size-1" id="recipeTitle"></div>
           </div>
           <div class="ingredients-section">
             <ul id="ingredient-list"></ul>
