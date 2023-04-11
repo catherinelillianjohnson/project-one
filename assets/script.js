@@ -5,218 +5,188 @@ var searchBtn = $("#search-btn");
 var mealList = $("meal");
 var savedBtnSection = $("#history-button-section");
 
-var EdamamUrl ="https://api.edamam.com/api/food-database/v2/parser?"
-var app_id="app_id=7cf60948"
-var app_key="&app_key=7a0e4d80d09649c34f64dba432baa17e"
+var EdamamUrl = "https://api.edamam.com/api/food-database/v2/parser?";
+var app_id = "app_id=7cf60948";
+var app_key = "&app_key=7a0e4d80d09649c34f64dba432baa17e";
 
-var recipeTitle = ""
-
+var recipeTitle = "";
 
 function search(food) {
   // empties the previous results before the next search results appear
-  $("#recipeImg").empty()
-  $("#ingredient-list").empty()
-  $("#recipeTitle").empty()
+  $("#recipeImg").empty();
+  $("#ingredient-list").empty();
+  $("#recipeTitle").empty();
 
   fetch(rootURL + spoontacularAPI + "&query=" + food + "&fillIngredients=true")
-  .then(function(response){
-    return response.json();
-  }) 
-  .then(function(data) {
- 
-    console.log(data.results)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data.results);
 
-    if(data.results.length === 0) {
+      if (data.results.length === 0) {
+        var modal = document.getElementById("myModal");
 
-      var modal =document.getElementById("myModal");
-    
-      var span = document.getElementsByClassName("close")[0];
+        var span = document.getElementsByClassName("close")[0];
         modal.style.display = "block";
-      span.onclick = function() {
-      modal.style.display = "none";
-    }
-      window.onclick = function(event) {
-        if (event.target == modal) {
+        span.onclick = function () {
+          modal.style.display = "none";
+        };
+        window.onclick = function (event) {
+          if (event.target == modal) {
             modal.style.display = "block";
-        }
-    }
-    }
+          }
+        };
+      }
 
-    
-   var randomRecipe = data.results[Math.floor(Math.random() * data.results.length)];
+      var randomRecipe =
+        data.results[Math.floor(Math.random() * data.results.length)];
 
-   //local storage to save each search
+      //local storage to save each search
 
-   var recipeTitle = randomRecipe.title
+      var recipeTitle = randomRecipe.title;
 
-   var savedIds = JSON.parse(localStorage.getItem(recipeTitle)) || []
-   savedIds.push(randomRecipe)
+      var savedIds = JSON.parse(localStorage.getItem(recipeTitle)) || [];
+      savedIds.push(randomRecipe);
 
-   localStorage.setItem(recipeTitle,JSON.stringify(savedIds))
-  
-    var resultItem = document.createElement("button");
-    resultItem.setAttribute("id", "history-btn");
-    resultItem.setAttribute("display", "block");
-    resultItem.textContent = randomRecipe.title
-    $(".history-button-section").append(resultItem);
+      localStorage.setItem(recipeTitle, JSON.stringify(savedIds));
 
-    $("#search-history").append(data.results);
+      var resultItem = document.createElement("button");
+      resultItem.setAttribute("id", "history-btn");
+      resultItem.setAttribute("display", "block");
+      resultItem.textContent = randomRecipe.title;
+      $("#history-button-section").append(resultItem);
 
-    // Edamam API fetches ingredients calorie count
+      $("#search-history").append(data.results);
 
-    for (let i = 0; i < randomRecipe.missedIngredients.length; i++) {
-      
+      // Edamam API fetches ingredients calorie count
 
-      ingr = randomRecipe.missedIngredients[i].name
-    
-      fetch (EdamamUrl + app_id + app_key + "&ingr=" + ingr)
-      .then(function(response){
-        return response.json();
-        
-      })
+      for (let i = 0; i < randomRecipe.missedIngredients.length; i++) {
+        ingr = randomRecipe.missedIngredients[i].name;
 
-      .then(function(data) {
+        fetch(EdamamUrl + app_id + app_key + "&ingr=" + ingr)
+          .then(function (response) {
+            return response.json();
+          })
 
+          .then(function (data) {
+            // append in ingredient picture, ingredient name, calorie count
+            var calories = data.hints[0].food.nutrients.ENERC_KCAL;
+            var ingredientEl = document.createElement("li");
+            var caloriesEl = document.createElement("p");
+            var ingredientPictureElement = document.createElement("img");
+            var ingredientNameElement = document.createElement("p");
+            ingredientNameElement.textContent =
+              randomRecipe.missedIngredients[i].original;
+            caloriesEl.textContent = " " + calories + " calories";
+            ingredientPictureElement.src =
+              randomRecipe.missedIngredients[i].image;
+            ingredientEl.appendChild(ingredientPictureElement);
+            ingredientEl.appendChild(ingredientNameElement);
+            ingredientEl.appendChild(caloriesEl);
+            document
+              .getElementById("ingredient-list")
+              .appendChild(ingredientEl);
+          });
+      }
+      // append in recipe title
+      var recipeTitleEl = document.getElementById("recipeTitle");
+      var recipeTitle = document.createTextNode(randomRecipe.title);
+      recipeTitleEl.appendChild(recipeTitle);
 
-       
-    // append in ingredient picture, ingredient name, calorie count
-        var calories = data.hints[0].food.nutrients.ENERC_KCAL
-        var ingredientEl = document.createElement("li") 
-        var caloriesEl = document.createElement("p")
-        var ingredientPictureElement = document.createElement("img")
-        var ingredientNameElement = document.createElement("p")
-        ingredientNameElement.textContent = randomRecipe.missedIngredients[i].original
-        caloriesEl.textContent = calories + " calories"
-        ingredientPictureElement.src = randomRecipe.missedIngredients[i].image
-        ingredientEl.appendChild(ingredientPictureElement)
-        ingredientEl.appendChild(ingredientNameElement)
-        ingredientEl.appendChild(caloriesEl)
-        document.getElementById("ingredient-list").appendChild(ingredientEl)
-      })
-      
-    }
-    // append in recipe title
-    var recipeTitleEl = document.getElementById("recipeTitle")
-    var recipeTitle = document.createTextNode(randomRecipe.title)
-    recipeTitleEl.appendChild(recipeTitle)
-
-    // append in image of recipe
-    var recipePictureElement = document.createElement("img")
-    recipePictureElement.src = randomRecipe.image
-    var src = document.getElementById("recipeImg")
-    src.appendChild(recipePictureElement) })
-
-  };
+      // append in image of recipe
+      var recipePictureElement = document.createElement("img");
+      recipePictureElement.src = randomRecipe.image;
+      var src = document.getElementById("recipeImg");
+      src.appendChild(recipePictureElement);
+    });
+}
 
 //to create buttons for searches already in local storage
 function renderSavedItems() {
+  var pcstorage = localStorage;
 
-  var pcstorage = localStorage
-
-  Object.keys(pcstorage).forEach(entry => {
-
-
+  Object.keys(pcstorage).forEach((entry) => {
     var resultItem = document.createElement("button");
     // resultItem.setAttribute("class", "history");
     resultItem.setAttribute("id", "history-btn");
     // resultItem.setAttribute("display", "block");
-    resultItem.textContent = entry
+    resultItem.textContent = entry;
     $(".history-button-section").append(resultItem);
 
-    console.log((entry))
-  })
- }
+    console.log(entry);
+  });
+}
 
-renderSavedItems()
-
-
+renderSavedItems();
 
 // function for the saved recipe buttons
 function reFetchRecipe(recipeName) {
+  $("#recipeImg").empty();
+  $("#ingredient-list").empty();
+  $("#recipeTitle").empty();
 
-$("#recipeImg").empty()
-$("#ingredient-list").empty()
-$("#recipeTitle").empty()
+  var localRecipe = JSON.parse(localStorage.getItem(recipeName)) || [];
 
-var localRecipe = JSON.parse(localStorage.getItem(recipeName)) || []
+  randomRecipe = localRecipe[0];
 
-randomRecipe = localRecipe[0]
+  console.log(randomRecipe);
 
-console.log(randomRecipe)
+  for (let i = 0; i < randomRecipe.missedIngredients.length; i++) {
+    ingr = randomRecipe.missedIngredients[i].name;
 
-for (let i = 0; i < randomRecipe.missedIngredients.length; i++) {
-
-  ingr = randomRecipe.missedIngredients[i].name
-
-  fetch (EdamamUrl + app_id + app_key + "&ingr=" + ingr)
-  .then(function(response){
-    return response.json();
-    
-  })
-  .then(function(data) {
-// append in ingredient picture, ingredient name, calorie count
-    var calories = data.hints[0].food.nutrients.ENERC_KCAL
-    var ingredientEl = document.createElement("li") 
-    var caloriesEl = document.createElement("p")
-    var ingredientPictureElement = document.createElement("img")
-    var ingredientNameElement = document.createElement("p")
-    ingredientNameElement.textContent = randomRecipe.missedIngredients[i].original
-    caloriesEl.textContent = calories + " calories"
-    ingredientPictureElement.src = randomRecipe.missedIngredients[i].image
-    ingredientEl.appendChild(ingredientPictureElement)
-    ingredientEl.appendChild(ingredientNameElement)
-    ingredientEl.appendChild(caloriesEl)
-    document.getElementById("ingredient-list").appendChild(ingredientEl)
-  })
-  
-}
+    fetch(EdamamUrl + app_id + app_key + "&ingr=" + ingr)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        // append in ingredient picture, ingredient name, calorie count
+        var calories = data.hints[0].food.nutrients.ENERC_KCAL;
+        var ingredientEl = document.createElement("li");
+        var caloriesEl = document.createElement("p");
+        var ingredientPictureElement = document.createElement("img");
+        var ingredientNameElement = document.createElement("p");
+        ingredientNameElement.textContent =
+          randomRecipe.missedIngredients[i].original;
+        caloriesEl.textContent = calories + " calories";
+        ingredientPictureElement.src = randomRecipe.missedIngredients[i].image;
+        ingredientEl.appendChild(ingredientPictureElement);
+        ingredientEl.appendChild(ingredientNameElement);
+        ingredientEl.appendChild(caloriesEl);
+        document.getElementById("ingredient-list").appendChild(ingredientEl);
+      });
+  }
   // append in recipe title
-  var recipeTitleEl = document.getElementById("recipeTitle")
-  var recipeTitle = document.createTextNode(randomRecipe.title)
-  recipeTitleEl.appendChild(recipeTitle)
+  var recipeTitleEl = document.getElementById("recipeTitle");
+  var recipeTitle = document.createTextNode(randomRecipe.title);
+  recipeTitleEl.appendChild(recipeTitle);
 
   // append in image of recipe
-  var recipePictureElement = document.createElement("img")
-  recipePictureElement.src = randomRecipe.image
-  var src = document.getElementById("recipeImg")
-  src.appendChild(recipePictureElement) 
-  console.log("button works")
+  var recipePictureElement = document.createElement("img");
+  recipePictureElement.src = randomRecipe.image;
+  var src = document.getElementById("recipeImg");
+  src.appendChild(recipePictureElement);
+  console.log("button works");
 }
 
+var arrayOfIngredients = ["ingredient1", "ingredient2", "ingredient3"];
+var randomIngredient =
+  arrayOfIngredients[Math.floor(Math.random() * arrayOfIngredients.length)];
 
-
-
-var arrayOfIngredients = ['ingredient1', 'ingredient2', 'ingredient3'];
-var randomIngredient = arrayOfIngredients[Math.floor(Math.random() * arrayOfIngredients.length)];
-
-
-
-
-searchBtn.on("click", function(event) {
+searchBtn.on("click", function (event) {
   event.preventDefault();
   // .trim takes out the white spaces like if you add a space when searching
   var food = $("#search").val().trim();
   search(food);
   $("#search").val("");
- 
-
 });
 
-savedBtnSection.on("click", function(event) {
+savedBtnSection.on("click", function (event) {
   event.preventDefault();
-  var recipeName = event.target.textContent
+  var recipeName = event.target.textContent;
   reFetchRecipe(recipeName);
-  $("#history").val("")
-  console.log("button works")
+  $("#history").val("");
+  console.log("button works");
 });
-
-
 
 var card = document.getElementById("ingredientCard");
-
-
-
-
-
-
- 
