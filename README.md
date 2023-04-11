@@ -28,8 +28,14 @@ THEN I save all the recipes
 
 ## Sneak Peek 
 
-The screenshot below is a sneak peek of the application.
 
-![On the online page, there is a search bar that allows you to enter a recipe and click the button to generate a random recipe](assets/sneak-peak.png)
+
+![On the online page, there is a search bar that allows you to enter a recipe and click the button to generate a random recipe](assets/deploymentimg.png)
 
 ## Link to Page
+
+https://github.com/catherinelillianjohnson/project-one/deployments/activity_log?environment=github-pages
+
+
+## Deployment Image
+
