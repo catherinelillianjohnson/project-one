@@ -35,9 +35,9 @@ THEN I save all the recipes
 
 ![On the online page, there is a search bar that allows you to enter a recipe and click the button to generate a random recipe](assets/deploymentimg.png)
 
-## Link to Page
+## Live Deployment Link
 
-https://github.com/catherinelillianjohnson/project-one/deployments/activity_log?environment=github-pages
+https://catherinelillianjohnson.github.io/project-one/
 
 ## Screenshots
 
