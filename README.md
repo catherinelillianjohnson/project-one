@@ -23,7 +23,7 @@ THEN I am presented with a unique recipe
 WHEN I am in need of another recipe for the same ingredient
 THEN I click the "Search" button again
 WHEN I find a recipe that I like
-THEN I save the recipe
+THEN I save all the recipes
 ```
 
 ## Sneak Peek 
